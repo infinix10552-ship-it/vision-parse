@@ -1,16 +1,48 @@
-# React + Vite
+# 👁️ VisionParse AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+VisionParse is a high-performance, AI-powered document OCR web application. It uses Azure AI Vision to extract text from images and PDFs with a premium, glassmorphism-styled UI.
 
-Currently, two official plugins are available:
+## 🚀 Deployment
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Option 1: Unified (Recommended)
+Deploy the entire project as a single service on **Render**.
+1. Connect this GitHub repo to Render.
+2. Render will automatically pick up `render.yaml`.
+3. Set your `AZURE_VISION_ENDPOINT` and `AZURE_VISION_KEY` in Render dashboard.
 
-## React Compiler
+### Option 2: Split (Vercel + Render)
+Deploy the frontend to **Vercel** and the backend to **Render**.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+#### 1. Backend (Render)
+- Deploy the `/backend` directory to Render.
+- Add your Vercel frontend URL to the `ALLOWED_ORIGINS` env var in Render.
 
-## Expanding the ESLint configuration
+#### 2. Frontend (Vercel)
+- Deploy the root directory to Vercel.
+- Update `vercel.json` rewrite destination to point to your backend Render URL:
+  ```json
+  { "source": "/api/(.*)", "destination": "https://your-backend.onrender.com/api/$1" }
+  ```
+- Or set environment variable `VITE_API_URL` to your Render backend URL.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ⚙️ Development
+
+```bash
+# Frontend
+npm install
+npm run dev
+
+# Backend
+cd backend
+npm install
+npm run dev
+```
+
+## 🔐 Configuration
+
+Copy `backend/.env.example` to `backend/.env` and add your Azure credentials:
+- `AZURE_VISION_ENDPOINT`
+- `AZURE_VISION_KEY`
+
+---
+Built with React, Vite, Framer Motion, and Express.
