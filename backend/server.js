@@ -85,7 +85,7 @@ if (config.server.nodeEnv === 'production' || process.env.SERVE_FRONTEND === 'tr
   app.use(express.static(publicPath));
   
   // SPA fallback for all other routes
-  app.get('(.*)', (req, res) => {
+  app.get('/:path*', (req, res) => {
     // If it's an API route that reached here, it's a 404
     if (req.path.startsWith('/api/')) {
         return res.status(404).json({ success: false, error: `Route ${req.method} ${req.path} not found.` });
@@ -113,7 +113,7 @@ if (config.server.nodeEnv === 'production' || process.env.SERVE_FRONTEND === 'tr
 }
 
 // Global 404 handler for API routes if they didn't match earlier
-app.use('/api/(.*)', (req, res) => {
+app.use('/api', (req, res) => {
   res.status(404).json({ success: false, error: `API route ${req.method} ${req.originalUrl} not found.` });
 });
 
