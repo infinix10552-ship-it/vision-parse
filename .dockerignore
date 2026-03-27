@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+backend/node_modules/
+
+# OS/System files
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Environment files - CRITICAL: never bake these into the image!
+.env
+.env.local
+.env.production
+backend/.env
+
+# Build outputs (we build inside docker stage)
+dist/
+backend/public/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Misc
+Dockerfile
+docker-compose.yml
+README.md
+.vscode/
+.eslint*
+vite.config.js
+tailwind.config.js
+postcss.config.js

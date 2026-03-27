@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: VisionParse
+    env: node
+    plan: free 
+    region: singapore
+    buildCommand: "npm run build:prod && npm install --prefix backend && cd backend && npm ci --production"
+    startCommand: "cd backend && node server.js"
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: NODE_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        fromService:
+          name: VisionParse
+          type: web
+          property: url
+      - key: AZURE_VISION_ENDPOINT
+        sync: false # Set manually in Render dashboard
+      - key: AZURE_VISION_KEY
+        sync: false # Set manually in Render dashboard
+      - key: LOG_LEVEL
+        value: info
